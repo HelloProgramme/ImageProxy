@@ -28,8 +28,33 @@ p {
 	margin: 0px auto;
 	font: 2.875rem Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
 }
-p a{
+
+p a {
 	color: white;
 	/* text-decoration: none; */
 	/* border-bottom: 2px solid white; */
+}
+
+#foo,
+.btn,
+.copyed {
+	font-size: 2.0rem;
+}
+
+.copyedshow {
+	font-size: 2.3rem;
+	display: block;
+}
+.copyedfade {
+	display: none;
+}
+
+#foo {
+	width: 20rem;
+	height: 4rem;
+}
+
+.btn {
+	width: 6rem;
+	height: 4rem;
 }
