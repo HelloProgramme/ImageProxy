@@ -1,5 +1,7 @@
 import { Hono } from "hono";
-import axios from 'axios';
+// import axios from 'axios';
+import { fetch } from 'fetch';
+
 
 const app = new Hono();
 
@@ -27,13 +29,13 @@ app.get('/proxy', async (c) => {
   const requestOptions = {
     method: 'GET',
     headers: { 'User-Agent': " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0" },
-    redirect: 'follow',
-    url
+    redirect: 'follow'
     // referrerPolicy: 'no-referrer'
   };
-  const response = await axios(requestOptions);
-  return response;
-  // return c.text(JSON.stringify(query, null, '  '));
+  const response = await fetch(url, requestOptions);
+  console.log(response);
+  // return response;
+  return c.text(JSON.stringify(query, null, '  '));
 })
 
 
