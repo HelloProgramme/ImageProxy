@@ -1510,20 +1510,26 @@ app.get("/user", (c) => {
   return c.text(JSON.stringify(query, null, "  "));
 });
 app.get("/proxy", async (c) => {
-  const userAgent = c.req.header("User-Agent");
   const query = c.req.query();
   const { url = void 0 } = query;
-  console.log("url :>> ", url);
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "User-Agent": " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0"
-    },
-    redirect: "follow"
-    // referrerPolicy: 'no-referrer'
-  };
-  const response = await fetch(url);
-  return response;
+  if (url === void 0) {
+    c.json({ msg: "\u53C2\u6570\u9519\u8BEF" });
+  } else {
+    try {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          "User-Agent": " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0"
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer"
+      };
+      const response = await fetch(url, requestOptions);
+      return response;
+    } catch (error) {
+      c.json({ msg: "\u56FE\u7247\u5730\u5740\u9519\u8BEF" });
+    }
+  }
 });
 var server_default = app;
 export {

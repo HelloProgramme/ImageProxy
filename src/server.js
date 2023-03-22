@@ -17,28 +17,30 @@ app.get("/user", (c) => {
 });
 
 app.get("/proxy", async (c) => {
-  const userAgent = c.req.header("User-Agent");
   const query = c.req.query();
-  // console.log('query :>> ', query);
-  // console.log('userAgent :>> ', userAgent);
   const { url = undefined } = query;
-  console.log("url :>> ", url);
-  // const newurl = new URL(url);
+  if (url === undefined) {
+    c.json({ msg: '参数错误' })
+  }
+  else {
+    try {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          "User-Agent":
+            " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      };
+      const response = await fetch(url, requestOptions);
+      return response;
+    } catch (error) {
+      c.json({ msg: "图片地址错误" })
+    }
 
-  const requestOptions = {
-    method: "GET",
+  }
 
-    headers: {
-      "User-Agent":
-        " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0",
-    },
-    redirect: "follow",
-    // referrerPolicy: 'no-referrer'
-  };
-  const response = await fetch(url);
-  // console.log(response);
-  return response;
-  // return c.text(JSON.stringify(query, null, "  "));
 });
 
 export default app;
